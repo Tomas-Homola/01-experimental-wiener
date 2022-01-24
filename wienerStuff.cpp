@@ -36,5 +36,12 @@ double* WienerStuff::linspace(double startValue, double endValue, int n)
 
 double WienerStuff::normalDistribution(double mean, double dispersion)
 {
-	return 0.0;
+	// dve nahodne cisla rovnomerne rozdelene z intervalu [0,1]
+	double U1 = (double)rand() / RAND_MAX;
+	double U2 = (double)rand() / RAND_MAX;
+	
+	if (U1 < EPSILON) // kontrola kvoli definicnemu oboru prirodzeneho logaritmu
+		return 0.0;
+	else
+		return (mean + dispersion * sqrt(-2.0 * log(U1)) * cos(2 * M_PI * U2));
 }
