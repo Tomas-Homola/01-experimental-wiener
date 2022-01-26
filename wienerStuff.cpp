@@ -1,23 +1,35 @@
 #include "wienerStuff.h"
 
-WienerTrajectory::WienerTrajectory(double endValue, unsigned int division)
+WienerProcess::WienerProcess(double timeEndValue, unsigned int timeAxisDivision, unsigned int trajectoriesCount)
 {
-	this->timeAxis = WienerStuff::linspace(0.0, endValue, division);
-	this->functionValues = new double[division];
-	this->division = division;
+	//std::cout << "wiener constructor\n";
+	this->timeAxis = WienerStuff::linspace(0.0, timeEndValue, timeAxisDivision);
+	this->trajectories = new double*[trajectoriesCount];
+	for (size_t i = 0; i < trajectoriesCount; i++)
+	{
+		this->trajectories[i] = new double[timeAixsDivision];
+	}
+	this->timeAixsDivision = timeAxisDivision;
+	this->trajectoriesCount = trajectoriesCount;
 }
 
-WienerTrajectory::~WienerTrajectory()
+WienerProcess::~WienerProcess()
 {
+	//std::cout << "wiener destructor\n";
 	delete[] this->timeAxis;
-	delete[] this->functionValues;
+	for (size_t i = 0; i < this->trajectoriesCount; i++)
+	{
+		delete[] this->trajectories[i];
+	}
+	delete[] trajectories;
 }
 
-void WienerTrajectory::computeTrajectory()
+double* WienerProcess::computeTrajectory()
 {
+	return nullptr;
 }
 
-void WienerTrajectory::newTimeAxis(double newEndValue, unsigned int newDivision)
+void WienerProcess::computeTrajectories()
 {
 }
 
