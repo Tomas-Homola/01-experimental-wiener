@@ -10,19 +10,20 @@ int main()
 	int temp[13] = { 0,0,0,0,0,0,0,0,0,0,0,0,0 };
 	//double* temp = linspace(0.0, 1.0, n);
 
-	WienerProcess wp = WienerProcess(2.0, 10, 3);
+	WienerProcess wp = WienerProcess(5.0, 100, 10000);
 	wp.computeTrajectories();
-	
-	for (size_t i = 0; i < wp.timeAxisTicks; i++)
-	{
-		cout << wp.timeAxis[i] << ":::" << wp.trajectories[1][i] << endl;
-	}
-	cout << endl;
+	//wp.printData();
+	//cout << "\n";
+	//for (size_t i = 0; i < wp.timeAxisTicks; i++)
+	//{
+	//	cout << wp.timeAxis[i] << ":::" << wp.trajectories[0][i] << endl;
+	//}
+	//cout << endl;
 
-	//if (exportTrajectory("test.csv", wp.timeAxis, wp.computeTrajectory(), wp.timeAxisTicks))
-	//	cout << "exported\n";
-	//else
-	//	cout << "NOT exported";
+	if (wp.exportData("data10000"))
+		cout << "exported\n";
+	else
+		cout << "NOT exported";
 	
 	
 	//for (size_t i = 0; i < n; i++)
