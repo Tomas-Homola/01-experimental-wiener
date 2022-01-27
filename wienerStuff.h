@@ -28,7 +28,8 @@ public:
 	double getStartTime() { return this->timeAxis[0]; }
 	double getEndTime() { return this->timeAxis[timeAxisTicks - 1]; }
 
-	bool exportData();
+	bool exportData(std::string fileName);
+	void printData();
 };
 
 double* linspace(double startValue, double endValue, int n); // funkcia na vytvorenie delenia casovej osi, inspirovane funkciou "linspace" z Matlabu
