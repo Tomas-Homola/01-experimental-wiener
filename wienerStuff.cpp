@@ -1,16 +1,18 @@
 #include "wienerStuff.h"
 
-WienerProcess::WienerProcess(double timeEndValue, unsigned int timeAxisDivision, unsigned int trajectoriesCount)
+WienerProcess::WienerProcess(double timeEndValue, unsigned int timeAxisTicks, unsigned int trajectoriesCount)
 {
 	//std::cout << "wiener constructor\n";
-	this->timeAxis = WienerStuff::linspace(0.0, timeEndValue, timeAxisDivision);
-	this->trajectories = new double*[trajectoriesCount];
+	this->timeAxisTicks = timeAxisTicks; // delenie casovej osi
+	this->trajectoriesCount = trajectoriesCount; // pocet trajektorii
+	
+	this->timeAxis = linspace(0.0, timeEndValue, timeAxisTicks); // vytvorenie casovej osi
+	this->trajectories = new double*[trajectoriesCount]; // alokacia pamati pre trajektorie
+
 	for (size_t i = 0; i < trajectoriesCount; i++)
 	{
-		this->trajectories[i] = new double[timeAixsDivision];
+		this->trajectories[i] = new double[timeAxisTicks]; // alokacia pamati pre jednotlive trajektorie
 	}
-	this->timeAixsDivision = timeAxisDivision;
-	this->trajectoriesCount = trajectoriesCount;
 }
 
 WienerProcess::~WienerProcess()
@@ -26,14 +28,37 @@ WienerProcess::~WienerProcess()
 
 double* WienerProcess::computeTrajectory()
 {
-	return nullptr;
+	double* trajectory = new double[timeAxisTicks];
+	trajectory[0] = normalDistribution(0.0, timeAxis[0] - 0.0);
+
+	for (size_t i = 1; i < timeAxisTicks; i++)
+	{
+		trajectory[i] = trajectory[i - 1] + normalDistribution(0.0, timeAxis[i] - timeAxis[i - 1]);
+	}
+
+	return trajectory;
 }
 
 void WienerProcess::computeTrajectories()
 {
+	for (size_t i = 0; i < trajectoriesCount; i++)
+	{
+		trajectories[i][0] = normalDistribution(0.0, timeAxis[0] - 0.0);
+		for (size_t j = 1; j < timeAxisTicks; j++)
+		{
+			trajectories[i][j] = trajectories[i][j-1] + normalDistribution(0.0, timeAxis[i] - timeAxis[i - 1]);
+		}
+		std::cout << i << "done\n";
+	}
+	std::cout << "computing trajectories done\n";
 }
 
-double* WienerStuff::linspace(double startValue, double endValue, int n)
+bool WienerProcess::exportData()
+{
+	return false;
+}
+
+double* linspace(double startValue, double endValue, int n)
 {
 	double* temp = new double[n];
 	double deltaX = (endValue - startValue) / (n - 1);
@@ -46,7 +71,7 @@ double* WienerStuff::linspace(double startValue, double endValue, int n)
 	return temp;
 }
 
-double WienerStuff::normalDistribution(double mean, double dispersion)
+double normalDistribution(double mean, double dispersion)
 {
 	// dve nahodne cisla rovnomerne rozdelene z intervalu [0,1]
 	double U1 = (double)rand() / RAND_MAX;
@@ -55,5 +80,20 @@ double WienerStuff::normalDistribution(double mean, double dispersion)
 	if (U1 < EPSILON) // kontrola kvoli definicnemu oboru prirodzeneho logaritmu
 		return 0.0;
 	else
-		return (mean + dispersion * sqrt(-2.0 * log(U1)) * cos(2 * M_PI * U2));
+		return (mean + dispersion * sqrt(-2.0 * log(U1)) * cos(2 * PI * U2));
+}
+
+bool exportTrajectory(std::string fileName, double* timeAxis, double* trajectory, unsigned int length)
+{
+	std::ofstream exportFile(fileName);
+	if (!exportFile.is_open())
+		return false;
+
+	for (size_t i = 0; i < length; i++)
+	{
+		exportFile << timeAxis[i] << "," << trajectory[i] << "\n";
+	}
+
+	exportFile.close();
+	return true;
 }
