@@ -8,19 +8,27 @@ int main()
 	srand(time(0));
 	int n = 100000;
 	int temp[13] = { 0,0,0,0,0,0,0,0,0,0,0,0,0 };
-	//double* temp = WienerStuff::linspace(0.0, 1.0, n);
+	//double* temp = linspace(0.0, 1.0, n);
 
-	WienerProcess wp = WienerProcess(2.0, 5, 2);
-	for (size_t i = 0; i < wp.timeAixsDivision; i++)
+	WienerProcess wp = WienerProcess(2.0, 10, 3);
+	wp.computeTrajectories();
+	
+	for (size_t i = 0; i < wp.timeAxisTicks; i++)
 	{
-		cout << wp.timeAxis[i] << " ";
+		cout << wp.timeAxis[i] << ":::" << wp.trajectories[1][i] << endl;
 	}
 	cout << endl;
 
+	//if (exportTrajectory("test.csv", wp.timeAxis, wp.computeTrajectory(), wp.timeAxisTicks))
+	//	cout << "exported\n";
+	//else
+	//	cout << "NOT exported";
+	
+	
 	//for (size_t i = 0; i < n; i++)
 	//{
 	//	//cout << temp[i] << endl;
-	//	double x = WienerStuff::normalDistribution(5.0, 2.0);
+	//	double x = normalDistribution(5.0, 2.0);
 	//	
 	//	if (x < 0.0001)
 	//		temp[0]++;
@@ -65,7 +73,7 @@ int main()
 	//for (size_t i = 0; i < n; i++)
 	//{
 	//	//cout << temp[i] << endl;
-	//	//double x = WienerStuff::normalDistribution(5.0, 0.5);
+	//	//double x = normalDistribution(5.0, 0.5);
 	//	double x = ((double)rand() / RAND_MAX) * 11.0 - 1.0;
 	//
 	//	if (x < 0.0001)
@@ -104,6 +112,7 @@ int main()
 	//	}
 	//	cout << endl;
 	//}
+	
 	//delete[] temp;
 	
 
