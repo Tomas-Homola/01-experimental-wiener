@@ -122,7 +122,7 @@ double normalDistribution(double mean, double dispersion)
 	if (U1 < EPSILON) // kontrola kvoli definicnemu oboru prirodzeneho logaritmu
 		return 0.0;
 	else
-		return (mean + dispersion * sqrt(-2.0 * log(U1)) * cos(2 * PI * U2));
+		return (mean + sqrt(-2.0 * log(U1) * dispersion) * cos(2 * PI * U2));
 }
 
 bool exportTrajectory(std::string fileName, double* timeAxis, double* trajectory, unsigned int length)
@@ -146,4 +146,16 @@ bool exportTrajectory(std::string fileName, double* timeAxis, double* trajectory
 
 	exportFile.close();
 	return true;
+}
+
+double* normalDistSample(double mean, double dispersion, int n)
+{
+	double* sample = new double[n];
+
+	for (size_t i = 0; i < n; i++)
+	{
+		sample[i] = normalDistribution(mean, dispersion);
+	}
+	
+	return sample;
 }
