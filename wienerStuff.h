@@ -24,6 +24,7 @@ public:
 
 	double* computeTrajectory();
 	void computeTrajectories();
+	void reset(double timeEndValue, unsigned int timeAxisTicks, unsigned int trajectoriesCount);
 
 	double getStartTime() { return this->timeAxis[0]; }
 	double getEndTime() { return this->timeAxis[timeAxisTicks - 1]; }

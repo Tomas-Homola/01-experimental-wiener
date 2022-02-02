@@ -54,6 +54,29 @@ void WienerProcess::computeTrajectories()
 	std::cout << "computing trajectories done\n";
 }
 
+void WienerProcess::reset(double timeEndValue, unsigned int timeAxisTicks, unsigned int trajectoriesCount)
+{
+	// vymazanie starych udajov
+	delete[] this->timeAxis; // vymazanie udajov starej casovej osi
+	for (size_t i = 0; i < this->trajectoriesCount; i++) // vymazanie starych udajov jednotlivych trajektorii
+	{
+		delete[] this->trajectories[i];
+	}
+	delete[] trajectories; // vymazanie starych trajektorii
+
+	// definovanie novych udajov
+	this->timeAxisTicks = timeAxisTicks; // nove delenie casovej osi
+	this->trajectoriesCount = trajectoriesCount; // novy pocet trajektorii
+
+	this->timeAxis = linspace(0.0, timeEndValue, timeAxisTicks); // vytvorenie novej casovej osi
+	this->trajectories = new double* [trajectoriesCount]; // alokacia pamati pre nove trajektorie
+
+	for (size_t i = 0; i < trajectoriesCount; i++)
+	{
+		this->trajectories[i] = (double*)calloc(timeAxisTicks, sizeof(double)); // alokacia pamati pre udaje jednotlivych trajektorii
+	}
+}
+
 bool WienerProcess::exportData(std::string fileName)
 {
 	fileName += ".csv";
