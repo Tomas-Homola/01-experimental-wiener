@@ -7,7 +7,7 @@ int main()
 {
 	srand(time(0));
 	double endTime = 3.0;
-	int n = 100, division = 301;
+	int n = 100, division = 601;
 	WienerProcess wp = WienerProcess(endTime, division, n);
 	std::string fileName = "data";
 
