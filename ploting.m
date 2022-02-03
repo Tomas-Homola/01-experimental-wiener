@@ -1,10 +1,14 @@
+% W_1 < W_3 && W_3 > W_2
 EPSILON = 0.000001;
+markerType = '.';
+lineType = '-';
+colorSuitable = '#00AD33';
+colorUnsuitable = '#BBBBBB';
 %% Nacitanie dat
 data100 = readmatrix('data100.csv');
 data1000 = readmatrix('data1000.csv');
 data10000 = readmatrix('data10000.csv');
 
-% W_1 < W_3 && W_3 > W_2
 % najdenie W_1, W_2 a W_3 indexov, kedze aj pre data1000 aj data10000 je
 % rovnake rozdelenie casovej osi, tak staci tieto hodnoty najst raz na
 % zaciatku a potom by mali byt rovnake pre vsetky 3 subory
@@ -27,20 +31,36 @@ title('100 trajectories of Wiener process', ...
 	append('Suitable trajectories: ', int2str(suitableCount), '/', int2str(count), ...
 	', Pr = ', num2str(suitableCount/count)));
 xlabel('Time', 'FontSize', 20)
-ylabel('W_{ω}(t)', 'FontSize', 20)
+ylabel('W(ω,t)', 'FontSize', 20)
 hold on
 for n = 2:count
 	if (suitable(n-1)) % ak ide o vyhovujucu trajektoriu ...
 		plot(data100(1, :), data100(n, :), ...
-			'-', 'color', '#00AD33', 'LineWidth', 1);
+			lineType, 'color', colorSuitable, 'LineWidth', 1);
 	else % ... alebo nevyhovujucu trajektoriu
 		plot(data100(1, :), data100(n, :), ...
-			'-', 'color', '#BBBBBB', 'LineWidth', 0.1);
+			lineType, 'color', colorUnsuitable, 'LineWidth', 0.1);
 	end
 end
 hold off
 
 %% Vykreslenie nahodneho vektora
+figure('Name', '100 trajectories', 'NumberTitle', 'off');
+title('Random vector (W_{1}, W_{2})')
+xlabel('W(ω,1)', 'FontSize', 20)
+ylabel('W(ω,2)', 'FontSize', 20)
+grid on
+hold on
+for n = 2:count
+	if (suitable(n-1)) % ak ide o vyhovujucu trajektoriu ...
+		plot(data100(n, w1), data100(n, w2), ...
+			markerType, 'color', colorSuitable, 'MarkerSize', 25);
+	else % ... alebo nevyhovujucu trajektoriu
+		plot(data100(n, w1), data100(n, w2), ...
+			markerType, 'color', colorUnsuitable, 'MarkerSize', 20);
+	end
+end
+hold off
 
 %% 1000 trajektorii
 % zistenie poctu trajektorii
@@ -58,20 +78,36 @@ title('1,000 trajectories of Wiener process', ...
 	append('Suitable trajectories: ', int2str(suitableCount), '/', int2str(count), ...
 	', Pr = ', num2str(suitableCount/count)));
 xlabel('Time', 'FontSize', 20)
-ylabel('W_{ω}(t)', 'FontSize', 20)
+ylabel('W(ω,t)', 'FontSize', 20)
 hold on
 for n = 2:count
 	if (suitable(n-1)) % ak ide o vyhovujucu trajektoriu ...
 		plot(data1000(1, :), data1000(n, :), ...
-			'-', 'color', '#00AD33', 'LineWidth', 1);
+			lineType, 'color', colorSuitable, 'LineWidth', 1);
 	else % ... alebo nevyhovujucu trajektoriu
 		plot(data1000(1, :), data1000(n, :), ...
-			'-', 'color', '#BBBBBB', 'LineWidth', 0.1);
+			lineType, 'color', colorUnsuitable, 'LineWidth', 0.1);
 	end
 end
 hold off
 
 %% Vykreslenie nahodneho vektora
+figure('Name', '1,000 trajectories', 'NumberTitle', 'off');
+title('Random vector (W_{1}, W_{2})')
+xlabel('W(ω,1)', 'FontSize', 20)
+ylabel('W(ω,2)', 'FontSize', 20)
+grid on
+hold on
+for n = 2:count
+	if (suitable(n-1)) % ak ide o vyhovujucu trajektoriu ...
+		plot(data1000(n, w1), data1000(n, w2), ...
+			markerType, 'color', colorSuitable, 'MarkerSize', 25);
+	else % ... alebo nevyhovujucu trajektoriu
+		plot(data1000(n, w1), data1000(n, w2), ...
+			markerType, 'color', colorUnsuitable, 'MarkerSize', 20);
+	end
+end
+hold off
 
 %% 10,000 trajektorii
 % zistenie poctu trajektorii
@@ -89,17 +125,33 @@ title('10,000 trajectories of Wiener process', ...
 	append('Suitable trajectories: ', int2str(suitableCount), '/', int2str(count), ...
 	', Pr = ', num2str(suitableCount/count)));
 xlabel('Time', 'FontSize', 20)
-ylabel('W_{ω}(t)', 'FontSize', 20)
+ylabel('W(ω,t)', 'FontSize', 20)
 hold on
 for n = 2:count
 	if (suitable(n-1)) % ak ide o vyhovujucu trajektoriu ...
 		plot(data10000(1, :), data10000(n, :), ...
-			'-', 'color', '#00AD33', 'LineWidth', 1);
+			lineType, 'color', colorSuitable, 'LineWidth', 1);
 	else % ... alebo nevyhovujucu trajektoriu
 		plot(data10000(1, :), data10000(n, :), ...
-			'-', 'color', '#BBBBBB', 'LineWidth', 0.1);
+			lineType, 'color', colorUnsuitable, 'LineWidth', 0.1);
 	end
 end
 hold off
 
 %% Vykreslenie nahodneho vektora
+figure('Name', '10,000 trajectories', 'NumberTitle', 'off');
+title('Random vector (W_{1}, W_{2}')
+xlabel('W(ω,1)', 'FontSize', 20)
+ylabel('W(ω,2)', 'FontSize', 20)
+grid on
+hold on
+for n = 2:count
+	if (suitable(n-1)) % ak ide o vyhovujucu trajektoriu ...
+		plot(data10000(n, w1), data10000(n, w2), ...
+			markerType, 'color', colorSuitable, 'MarkerSize', 15);
+	else % ... alebo nevyhovujucu trajektoriu
+		plot(data10000(n, w1), data10000(n, w2), ...
+			markerType, 'color', colorUnsuitable, 'MarkerSize', 10);
+	end
+end
+hold off
