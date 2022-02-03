@@ -4,6 +4,7 @@ markerType = '.';
 lineType = '-';
 colorSuitable = '#00AD33';
 colorUnsuitable = '#BBBBBB';
+plotSurf = true;
 %% Nacitanie dat
 data100 = readmatrix('data100.csv');
 data1000 = readmatrix('data1000.csv');
@@ -140,7 +141,7 @@ hold off
 
 %% Vykreslenie nahodneho vektora
 figure('Name', '10,000 trajectories', 'NumberTitle', 'off');
-title('Random vector (W_{1}, W_{2}')
+title('Random vector (W_{1}, W_{2})')
 xlabel('W(ω,1)', 'FontSize', 20)
 ylabel('W(ω,2)', 'FontSize', 20)
 grid on
@@ -155,3 +156,28 @@ for n = 2:count
 	end
 end
 hold off
+
+%% Veci mimo riesenia ulohy, iba som sa hral s vykreslovanim
+W1start = data100(2,w1);
+W2start = data100(2,w2);
+W1end = data100(end,w1);
+W2end = data100(end,w2);
+W1 = data100(2:end, w1);
+W2 = data100(2:end, w2);
+figure
+grid on
+hold on
+plot(W1, W2, '.-', 'Color', '#888888')
+plot(W1start, W2start, '.', 'Color', 'green', 'MarkerSize', 20)
+plot(W1end, W2end, '.', 'Color', 'red', 'MarkerSize', 20)
+hold off
+%%
+if (plotSurf)
+	surfData = readmatrix('surfPlotTest.csv');
+	[dimX, dimY] = size(surfData);
+	dimX = dimX - 1;
+	[X,Y] = meshgrid(1:dimY, 1:dimX);
+	figure
+	colormap gray
+	surf(X,Y,surfData(2:end, :), 'EdgeColor', 'none')
+end
