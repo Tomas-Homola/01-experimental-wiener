@@ -1,10 +1,11 @@
-% W_1 < W_3 && W_3 > W_2
+% Uloha: W_1 < W_3 && W_3 > W_2
 EPSILON = 0.000001;
 markerType = '.';
 lineType = '-';
 colorSuitable = '#00AD33';
 colorUnsuitable = '#BBBBBB';
-plotSurf = true;
+plotSurf = false;
+
 %% Nacitanie dat
 data100 = readmatrix('data100.csv');
 data1000 = readmatrix('data1000.csv');
@@ -158,19 +159,19 @@ end
 hold off
 
 %% Veci mimo riesenia ulohy, iba som sa hral s vykreslovanim
-W1start = data100(2,w1);
-W2start = data100(2,w2);
-W1end = data100(end,w1);
-W2end = data100(end,w2);
-W1 = data100(2:end, w1);
-W2 = data100(2:end, w2);
-figure
-grid on
-hold on
-plot(W1, W2, '.-', 'Color', '#888888')
-plot(W1start, W2start, '.', 'Color', 'green', 'MarkerSize', 20)
-plot(W1end, W2end, '.', 'Color', 'red', 'MarkerSize', 20)
-hold off
+% W1start = data100(2,w1);
+% W2start = data100(2,w2);
+% W1end = data100(end,w1);
+% W2end = data100(end,w2);
+% W1 = data100(2:end, w1);
+% W2 = data100(2:end, w2);
+% figure
+% grid on
+% hold on
+% plot(W1, W2, '.-', 'Color', '#888888')
+% plot(W1start, W2start, '.', 'Color', 'green', 'MarkerSize', 20)
+% plot(W1end, W2end, '.', 'Color', 'red', 'MarkerSize', 20)
+% hold off
 %%
 if (plotSurf)
 	surfData = readmatrix('surfPlotTest.csv');
